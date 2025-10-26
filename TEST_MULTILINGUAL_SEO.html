@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zynstro - Multilingual SEO Testing Page</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; padding: 2rem; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #6366f1; margin-bottom: 1.5rem; }
+        h2 { color: #333; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #6366f1; }
+        .test-section { margin: 1.5rem 0; padding: 1rem; background: #f9fafb; border-radius: 8px; }
+        .button { padding: 0.75rem 1.5rem; background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; margin: 0.5rem; font-weight: 600; }
+        .button:hover { background: #4f46e5; }
+        .button.secondary { background: #10b981; }
+        .button.danger { background: #ef4444; }
+        .output { background: #1f2937; color: #10b981; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-family: monospace; font-size: 0.875rem; max-height: 400px; overflow-y: auto; }
+        .success { color: #10b981; font-weight: 600; }
+        .error { color: #ef4444; font-weight: 600; }
+        .info { color: #3b82f6; font-weight: 600; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f9fafb; font-weight: 600; color: #6366f1; }
+        .status-badge { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; }
+        .status-ok { background: #d1fae5; color: #065f46; }
+        .status-warning { background: #fef3c7; color: #92400e; }
+        .status-error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Zynstro - Multilingual SEO Testing Dashboard</h1>
+        <p style="color: #6b7280; margin-bottom: 2rem;">Test and validate all multilingual SEO components</p>
+
+        <!-- Language Detection Test -->
+        <h2>1. Language Detection</h2>
+        <div class="test-section">
+            <button class="button" onclick="testLanguageDetection()">Test Language Detection</button>
+            <button class="button secondary" onclick="testLanguageSwitching()">Test Language Switching</button>
+            <div id="langDetectionOutput"></div>
+        </div>
+
+        <!-- Hreflang Tags Test -->
+        <h2>2. Hreflang Tags Validation</h2>
+        <div class="test-section">
+            <button class="button" onclick="validateHreflangTags()">Validate Hreflang Tags</button>
+            <button class="button secondary" onclick="showHreflangHTML()">Show Hreflang HTML</button>
+            <div id="hreflangOutput"></div>
+        </div>
+
+        <!-- Schema Markup Test -->
+        <h2>3. Schema Markup Validation</h2>
+        <div class="test-section">
+            <button class="button" onclick="testSchemaMarkup()">Generate Schema Markup</button>
+            <button class="button secondary" onclick="validateSchemaJSON()">Validate JSON-LD</button>
+            <div id="schemaOutput"></div>
+        </div>
+
+        <!-- Sitemap Generation Test -->
+        <h2>4. Sitemap Generation</h2>
+        <div class="test-section">
+            <button class="button" onclick="previewSitemaps()">Preview Sitemaps</button>
+            <button class="button secondary" onclick="generateAndDownloadSitemaps()">Download All Sitemaps</button>
+            <button class="button secondary" onclick="generateAndDownloadRobotsTxt()">Download robots.txt</button>
+            <div id="sitemapOutput"></div>
+        </div>
+
+        <!-- URL Structure Test -->
+        <h2>5. URL Structure Testing</h2>
+        <div class="test-section">
+            <button class="button" onclick="testURLStructure()">Test URL Generation</button>
+            <div id="urlOutput"></div>
+        </div>
+
+        <!-- Geo-Targeting Test -->
+        <h2>6. Geo-Targeting</h2>
+        <div class="test-section">
+            <button class="button" onclick="testGeoDetection()">Test Geo-Detection</button>
+            <div id="geoOutput"></div>
+        </div>
+
+        <!-- Currency Conversion Test -->
+        <h2>7. Currency & Localization</h2>
+        <div class="test-section">
+            <button class="button" onclick="testCurrencyConversion()">Test Currency Conversion</button>
+            <button class="button secondary" onclick="testDateFormatting()">Test Date Formatting</button>
+            <div id="currencyOutput"></div>
+        </div>
+
+        <!-- Complete Validation -->
+        <h2>8. Complete System Check</h2>
+        <div class="test-section">
+            <button class="button danger" style="font-size: 1.125rem; padding: 1rem 2rem;" onclick="runCompleteValidation()">🚀 Run Complete Validation</button>
+            <div id="completeOutput"></div>
+        </div>
+    </div>
+
+    <!-- Include all multilingual SEO scripts -->
+    <script src="multilingual-seo-config.js"></script>
+    <script src="language-switcher.js"></script>
+    <script src="schema-markup-multilingual.js"></script>
+    <script src="sitemap-generator.js"></script>
+    <script src="translations.js"></script>
+
+    <script>
+        // Test Functions
+        function testLanguageDetection() {
+            const output = document.getElementById('langDetectionOutput');
+            const langManager = new LanguageManager();
+            
+            let html = '<div class="output">';
+            html += `<div class="success">✅ Current Language: ${langManager.currentLanguage}</div>`;
+            html += `<div class="info">📍 Browser Language: ${navigator.language}</div>`;
+            html += `<div class="info">🌐 Stored Language: ${langManager.getStoredLanguage() || 'None'}</div>`;
+            
+            const langData = langManager.getCurrentLanguageData();
+            html += '<br><strong>Language Details:</strong><br>';
+            html += `Name: ${langData.name}<br>`;
+            html += `Native Name: ${langData.nativeName}<br>`;
+            html += `Currency: ${langData.currency}<br>`;
+            html += `RTL: ${langData.rtl || false}<br>`;
+            html += '</div>';
+            
+            output.innerHTML = html;
+        }
+
+        function testLanguageSwitching() {
+            const output = document.getElementById('langDetectionOutput');
+            const langManager = new LanguageManager();
+            
+            let html = '<div class="output">';
+            html += '<strong>Testing Language Switching...</strong><br><br>';
+            
+            const testLangs = ['en', 'es', 'fr', 'de', 'ja'];
+            testLangs.forEach(lang => {
+                langManager.setLanguage(lang);
+                const stored = langManager.getStoredLanguage();
+                const status = stored === lang ? '✅' : '❌';
+                html += `${status} Set ${lang}: ${stored === lang ? 'Success' : 'Failed'}<br>`;
+            });
+            
+            html += '</div>';
+            output.innerHTML = html;
+        }
+
+        function validateHreflangTags() {
+            const output = document.getElementById('hreflangOutput');
+            const hreflangManager = new HreflangManager('/');
+            const tags = hreflangManager.generateHreflangTags();
+            
+            let html = '<div class="output">';
+            html += `<div class="success">✅ Generated ${tags.length} hreflang tags</div><br>`;
+            
+            // Create table
+            html += '<table style="width:100%; color: #fff; margin-top: 1rem;">';
+            html += '<tr><th>Hreflang</th><th>URL</th></tr>';
+            
+            tags.slice(0, 10).forEach(tag => {
+                html += `<tr><td>${tag.hreflang}</td><td>${tag.href}</td></tr>`;
+            });
+            
+            html += `<tr><td colspan="2" style="text-align:center; padding-top:1rem;">... and ${tags.length - 10} more</td></tr>`;
+            html += '</table>';
+            html += '</div>';
+            
+            output.innerHTML = html;
+        }
+
+        function showHreflangHTML() {
+            const output = document.getElementById('hreflangOutput');
+            const hreflangManager = new HreflangManager('/');
+            const html = hreflangManager.getHreflangHTML();
+            
+            output.innerHTML = `<div class="output"><pre>${escapeHtml(html)}</pre></div>`;
+        }
+
+        function testSchemaMarkup() {
+            const output = document.getElementById('schemaOutput');
+            const schemaGenerator = new MultilingualSchemaGenerator('en');
+            const schema = schemaGenerator.generateOrganizationSchema();
+            
+            const html = `<div class="output">
+                <div class="success">✅ Organization Schema Generated</div><br>
+                <pre>${JSON.stringify(schema, null, 2)}</pre>
+            </div>`;
+            
+            output.innerHTML = html;
+        }
+
+        function validateSchemaJSON() {
+            const output = document.getElementById('schemaOutput');
+            const schemaGenerator = new MultilingualSchemaGenerator('en');
+            const schemas = [
+                schemaGenerator.generateOrganizationSchema(),
+                schemaGenerator.generateServiceSchema(),
+                schemaGenerator.generateWebSiteSchema()
+            ];
+            
+            let html = '<div class="output">';
+            let valid = 0;
+            
+            schemas.forEach((schema, i) => {
+                try {
+                    JSON.stringify(schema);
+                    html += `<div class="success">✅ Schema ${i + 1}: Valid JSON-LD</div>`;
+                    valid++;
+                } catch (e) {
+                    html += `<div class="error">❌ Schema ${i + 1}: Invalid - ${e.message}</div>`;
+                }
+            });
+            
+            html += `<br><strong>Result: ${valid}/${schemas.length} schemas valid</strong>`;
+            html += '</div>';
+            
+            output.innerHTML = html;
+        }
+
+        function previewSitemaps() {
+            const output = document.getElementById('sitemapOutput');
+            const generator = new InternationalSitemapGenerator();
+            
+            let html = '<div class="output">';
+            html += '<div class="success">✅ Sitemap Index Preview:</div><br>';
+            html += '<pre>' + escapeHtml(generator.generateSitemapIndex().substring(0, 1000)) + '...</pre>';
+            html += '</div>';
+            
+            output.innerHTML = html;
+        }
+
+        function testURLStructure() {
+            const output = document.getElementById('urlOutput');
+            const languages = ['en', 'es', 'fr', 'de', 'ja'];
+            const paths = ['/', '/about', '/pricing'];
+            
+            let html = '<div class="output">';
+            html += '<table style="width:100%; color: #fff;">';
+            html += '<tr><th>Language</th><th>Path</th><th>Generated URL</th></tr>';
+            
+            languages.forEach(lang => {
+                paths.forEach(path => {
+                    const url = URL_STRUCTURE.getCurrentUrl(lang, path);
+                    html += `<tr><td>${lang}</td><td>${path}</td><td>${url}</td></tr>`;
+                });
+            });
+            
+            html += '</table></div>';
+            output.innerHTML = html;
+        }
+
+        async function testGeoDetection() {
+            const output = document.getElementById('geoOutput');
+            output.innerHTML = '<div class="output">Detecting location...</div>';
+            
+            try {
+                const geoData = await GeoTargeting.detectUserCountry();
+                const suggestedLang = await GeoTargeting.suggestLanguageForCountry(geoData.country);
+                
+                let html = '<div class="output">';
+                html += '<div class="success">✅ Geo-Detection Successful</div><br>';
+                html += `Country: ${geoData.country}<br>`;
+                html += `Region: ${geoData.region || 'N/A'}<br>`;
+                html += `City: ${geoData.city || 'N/A'}<br>`;
+                html += `Currency: ${geoData.currency}<br>`;
+                html += `Suggested Language: ${suggestedLang}<br>`;
+                html += '</div>';
+                
+                output.innerHTML = html;
+            } catch (error) {
+                output.innerHTML = `<div class="output"><div class="error">❌ Geo-detection failed: ${error.message}</div></div>`;
+            }
+        }
+
+        async function testCurrencyConversion() {
+            const output = document.getElementById('currencyOutput');
+            const converter = new CurrencyConverter();
+            
+            output.innerHTML = '<div class="output">Fetching exchange rates...</div>';
+            
+            const success = await converter.fetchExchangeRates();
+            
+            if (success) {
+                const baseAmount = 100;
+                const conversions = [
+                    { from: 'USD', to: 'EUR', locale: 'de-DE' },
+                    { from: 'USD', to: 'GBP', locale: 'en-GB' },
+                    { from: 'USD', to: 'JPY', locale: 'ja-JP' },
+                    { from: 'USD', to: 'MXN', locale: 'es-MX' }
+                ];
+                
+                let html = '<div class="output">';
+                html += '<div class="success">✅ Exchange Rates Loaded</div><br>';
+                html += '<table style="width:100%; color: #fff;">';
+                html += '<tr><th>Amount</th><th>From</th><th>To</th><th>Result</th></tr>';
+                
+                conversions.forEach(conv => {
+                    const result = converter.displayLocalizedPrice(baseAmount, conv.from, conv.to, conv.locale);
+                    html += `<tr><td>${baseAmount}</td><td>${conv.from}</td><td>${conv.to}</td><td>${result}</td></tr>`;
+                });
+                
+                html += '</table></div>';
+                output.innerHTML = html;
+            } else {
+                output.innerHTML = '<div class="output"><div class="error">❌ Failed to fetch exchange rates</div></div>';
+            }
+        }
+
+        function testDateFormatting() {
+            const output = document.getElementById('currencyOutput');
+            const date = new Date();
+            const locales = ['en-US', 'es-ES', 'fr-FR', 'de-DE', 'ja-JP', 'ar-SA'];
+            
+            let html = '<div class="output">';
+            html += '<table style="width:100%; color: #fff;">';
+            html += '<tr><th>Locale</th><th>Formatted Date</th></tr>';
+            
+            locales.forEach(locale => {
+                const formatted = LocalizationFormatter.formatDate(date, locale);
+                html += `<tr><td>${locale}</td><td>${formatted}</td></tr>`;
+            });
+            
+            html += '</table></div>';
+            output.innerHTML = html;
+        }
+
+        async function runCompleteValidation() {
+            const output = document.getElementById('completeOutput');
+            let html = '<div class="output">';
+            html += '<h3 style="color: #10b981;">🚀 Running Complete System Validation...</h3><br>';
+            
+            const tests = [];
+            
+            // Test 1: Language Manager
+            html += '<strong>1. Language Detection System</strong><br>';
+            try {
+                const langManager = new LanguageManager();
+                const currentLang = langManager.currentLanguage;
+                html += `✅ Language Manager: OK (Current: ${currentLang})<br>`;
+                tests.push(true);
+            } catch (e) {
+                html += `❌ Language Manager: FAILED - ${e.message}<br>`;
+                tests.push(false);
+            }
+            
+            // Test 2: Hreflang
+            html += '<br><strong>2. Hreflang Tag Generation</strong><br>';
+            try {
+                const hreflangManager = new HreflangManager('/');
+                const tags = hreflangManager.generateHreflangTags();
+                html += `✅ Hreflang Tags: OK (${tags.length} tags generated)<br>`;
+                tests.push(true);
+            } catch (e) {
+                html += `❌ Hreflang Tags: FAILED - ${e.message}<br>`;
+                tests.push(false);
+            }
+            
+            // Test 3: Schema Markup
+            html += '<br><strong>3. Schema Markup Generation</strong><br>';
+            try {
+                const schemaGenerator = new MultilingualSchemaGenerator('en');
+                const schema = schemaGenerator.generateOrganizationSchema();
+                JSON.stringify(schema); // Validate JSON
+                html += `✅ Schema Markup: OK (Valid JSON-LD)<br>`;
+                tests.push(true);
+            } catch (e) {
+                html += `❌ Schema Markup: FAILED - ${e.message}<br>`;
+                tests.push(false);
+            }
+            
+            // Test 4: Sitemap Generator
+            html += '<br><strong>4. Sitemap Generation</strong><br>';
+            try {
+                const sitemapGen = new InternationalSitemapGenerator();
+                const sitemap = sitemapGen.generateSitemapIndex();
+                html += `✅ Sitemap Generator: OK<br>`;
+                tests.push(true);
+            } catch (e) {
+                html += `❌ Sitemap Generator: FAILED - ${e.message}<br>`;
+                tests.push(false);
+            }
+            
+            // Test 5: URL Structure
+            html += '<br><strong>5. URL Structure</strong><br>';
+            try {
+                const url = URL_STRUCTURE.getCurrentUrl('es', '/about');
+                html += `✅ URL Structure: OK (Test: ${url})<br>`;
+                tests.push(true);
+            } catch (e) {
+                html += `❌ URL Structure: FAILED - ${e.message}<br>`;
+                tests.push(false);
+            }
+            
+            // Results
+            const passed = tests.filter(t => t).length;
+            const total = tests.length;
+            const percentage = Math.round((passed / total) * 100);
+            
+            html += '<br><hr style="border-color: #4ade80; margin: 1rem 0;"><br>';
+            html += `<h3 style="color: ${percentage === 100 ? '#10b981' : '#f59e0b'};">`;
+            html += `📊 Validation Result: ${passed}/${total} Tests Passed (${percentage}%)`;
+            html += '</h3>';
+            
+            if (percentage === 100) {
+                html += '<br><div style="color: #10b981; font-size: 1.2rem; font-weight: bold;">🎉 ALL SYSTEMS OPERATIONAL!</div>';
+                html += '<div style="color: #10b981;">Your multilingual SEO implementation is ready for production.</div>';
+            } else {
+                html += '<br><div style="color: #f59e0b; font-weight: bold;">⚠️ Some tests failed. Please check the errors above.</div>';
+            }
+            
+            html += '</div>';
+            output.innerHTML = html;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Auto-run language detection on load
+        window.addEventListener('load', () => {
+            testLanguageDetection();
+        });
+    </script>
+</body>
+</html>

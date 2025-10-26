@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Business - Zynstro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .user-profile {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .user-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .page-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .section-description {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .names-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .name-card {
+            background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+            border: 3px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .name-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .name-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .name-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .name-card:active {
+            transform: translateY(-4px);
+        }
+
+        .name-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #6366f1;
+            margin-bottom: 0.5rem;
+        }
+
+        .name-industry {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .industry-card {
+            background: white;
+            border: 3px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .industry-card:hover {
+            border-color: #ec4899;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2);
+            background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%);
+        }
+
+        .industry-card:active {
+            transform: translateY(-4px);
+        }
+
+        .industry-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .industry-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .industry-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            text-align: center;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #e5e7eb;
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        .loading-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .names-grid,
+            .industry-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="user-profile" id="userProfile">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-name" id="userName">Guest User</div>
+            </div>
+            <h1 class="page-title">Choose Your Path</h1>
+            <p class="page-subtitle">Select a business name or explore by industry</p>
+        </div>
+
+        <!-- Saved Business Names Section -->
+        <div class="section">
+            <h2 class="section-title">📌 Your Saved Business Names</h2>
+            <p class="section-description">Click any name to view full details and branding insights</p>
+            <div class="names-grid" id="namesGrid">
+                <!-- Dynamic content loaded here -->
+            </div>
+        </div>
+
+        <!-- Industry Selection Section -->
+        <div class="section">
+            <h2 class="section-title">🎯 Explore by Industry</h2>
+            <p class="section-description">Discover business names tailored to your industry</p>
+            <div class="industry-grid" id="industryGrid">
+                <!-- Dynamic content loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading details...</div>
+        </div>
+    </div>
+
+    <script>
+        // Sample business names data (in production, load from sessionStorage or API)
+        const sampleNames = [
+            { name: 'NexusTech', industry: 'Tech Startup', score: 95 },
+            { name: 'FluxCoffee', industry: 'Coffee Shop', score: 88 },
+            { name: 'ApexFit', industry: 'Fitness Studio', score: 92 },
+            { name: 'LuminaFashion', industry: 'Fashion Brand', score: 90 },
+            { name: 'QuantumLab', industry: 'Tech Startup', score: 94 },
+            { name: 'ZenithBeauty', industry: 'Beauty Salon', score: 89 }
+        ];
+
+        const industries = [
+            { id: 'tech', name: 'Tech Startup', icon: '💻', description: 'Software, apps, SaaS' },
+            { id: 'coffee', name: 'Coffee Shop', icon: '☕', description: 'Cafés, roasters, specialty coffee' },
+            { id: 'fitness', name: 'Fitness Studio', icon: '💪', description: 'Gyms, yoga, personal training' },
+            { id: 'fashion', name: 'Fashion Brand', icon: '👗', description: 'Clothing, accessories, style' },
+            { id: 'restaurant', name: 'Restaurant', icon: '🍽️', description: 'Dining, cuisine, food service' },
+            { id: 'beauty', name: 'Beauty Salon', icon: '💅', description: 'Spa, cosmetics, wellness' },
+            { id: 'marketing', name: 'Marketing Agency', icon: '📢', description: 'Digital, branding, advertising' },
+            { id: 'photography', name: 'Photography', icon: '📸', description: 'Studio, events, portraits' }
+        ];
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        function initializePage() {
+            loadUserProfile();
+            loadSavedNames();
+            loadIndustries();
+            setupEventListeners();
+        }
+
+        function loadUserProfile() {
+            // Check if user is logged in
+            const currentUser = JSON.parse(localStorage.getItem('zynstro_currentUser') || 
+                                sessionStorage.getItem('zynstro_currentUser') || '{}');
+            
+            if (currentUser && currentUser.name) {
+                document.getElementById('userName').textContent = currentUser.name;
+                const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.getElementById('userAvatar').textContent = initials;
+            }
+        }
+
+        function loadSavedNames() {
+            const namesGrid = document.getElementById('namesGrid');
+            
+            // Try to load from user's saved names, otherwise use samples
+            const currentUser = JSON.parse(localStorage.getItem('zynstro_currentUser') || 
+                                sessionStorage.getItem('zynstro_currentUser') || '{}');
+            
+            const namesToShow = (currentUser.savedNames && currentUser.savedNames.length > 0) 
+                ? currentUser.savedNames 
+                : sampleNames;
+
+            if (namesToShow.length === 0) {
+                namesGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #6b7280;">
+                        <p style="font-size: 1.125rem; margin-bottom: 1rem;">No saved business names yet</p>
+                        <p>Generate some names in the main app and they'll appear here!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            namesGrid.innerHTML = namesToShow.map((item, index) => `
+                <div class="name-card" data-name="${item.name}" data-industry="${item.industry}" data-index="${index}">
+                    <div class="name-text">${item.name}</div>
+                    <div class="name-industry">${item.industry} • Score: ${item.score || 90}/100</div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.name-card').forEach(card => {
+                card.addEventListener('click', handleNameClick);
+            });
+        }
+
+        function loadIndustries() {
+            const industryGrid = document.getElementById('industryGrid');
+            
+            industryGrid.innerHTML = industries.map(industry => `
+                <div class="industry-card" data-industry-id="${industry.id}" data-industry-name="${industry.name}">
+                    <div class="industry-icon">${industry.icon}</div>
+                    <div class="industry-name">${industry.name}</div>
+                    <div class="industry-description">${industry.description}</div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.industry-card').forEach(card => {
+                card.addEventListener('click', handleIndustryClick);
+            });
+        }
+
+        function setupEventListeners() {
+            document.getElementById('userProfile').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        function handleNameClick(event) {
+            const card = event.currentTarget;
+            const name = card.dataset.name;
+            const industry = card.dataset.industry;
+            const index = card.dataset.index;
+
+            showLoading();
+
+            // Store selection in sessionStorage
+            sessionStorage.setItem('selectedBusinessName', JSON.stringify({
+                name: name,
+                industry: industry,
+                index: index,
+                timestamp: Date.now()
+            }));
+
+            // Redirect to details page after brief delay for UX
+            setTimeout(() => {
+                window.location.href = `details.html?name=${encodeURIComponent(name)}&industry=${encodeURIComponent(industry)}`;
+            }, 500);
+        }
+
+        function handleIndustryClick(event) {
+            const card = event.currentTarget;
+            const industryId = card.dataset.industryId;
+            const industryName = card.dataset.industryName;
+
+            showLoading();
+
+            // Store selection in sessionStorage
+            sessionStorage.setItem('selectedIndustry', JSON.stringify({
+                id: industryId,
+                name: industryName,
+                timestamp: Date.now()
+            }));
+
+            // Redirect to details page
+            setTimeout(() => {
+                window.location.href = `details.html?industry=${encodeURIComponent(industryName)}&explore=true`;
+            }, 500);
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

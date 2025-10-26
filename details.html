@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Details - Zynstro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: #6366f1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInLeft 0.5s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeInUp 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #6366f1, #ec4899, #f59e0b);
+        }
+
+        .business-name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .industry-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            color: #1f2937;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin: 0 auto 0.5rem;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .score-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .details-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
+        }
+
+        .detail-card:nth-child(1) { animation-delay: 0.1s; }
+        .detail-card:nth-child(2) { animation-delay: 0.2s; }
+        .detail-card:nth-child(3) { animation-delay: 0.3s; }
+        .detail-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        .card-content {
+            color: #4b5563;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            color: #0369a1;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 2px solid #bae6fd;
+        }
+
+        .domain-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .domain-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #6366f1;
+        }
+
+        .domain-name {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .domain-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .domain-status.available {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .domain-status.taken {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .tagline-item {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border-left: 4px solid #f59e0b;
+            margin-bottom: 1rem;
+            font-style: italic;
+            font-weight: 600;
+            color: #78350f;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6366f1;
+            border: 2px solid #6366f1;
+        }
+
+        .btn-secondary:hover {
+            background: #6366f1;
+            color: white;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .business-name {
+                font-size: 2.5rem;
+            }
+
+            .hero-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .score-container {
+                gap: 1rem;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="selection.html" class="back-button">
+            ← Back to Selection
+        </a>
+
+        <div class="hero-card">
+            <h1 class="business-name" id="businessName">Loading...</h1>
+            <div class="industry-badge" id="industryBadge">Industry</div>
+            
+            <div class="score-container">
+                <div class="score-item">
+                    <div class="score-circle" id="scoreOriginality">95</div>
+                    <div class="score-label">Originality</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-circle" id="scoreSEO" style="background: linear-gradient(135deg, #ec4899, #db2777);">88</div>
+                    <div class="score-label">SEO Score</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-circle" id="scoreMemorability" style="background: linear-gradient(135deg, #f59e0b, #d97706);">92</div>
+                    <div class="score-label">Memorability</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="details-grid">
+            <!-- Explanation Card -->
+            <div class="detail-card">
+                <div class="card-header">
+                    <div class="card-icon">💡</div>
+                    <h2 class="card-title">Why This Name Works</h2>
+                </div>
+                <div class="card-content" id="explanationContent">
+                    Loading explanation...
+                </div>
+                <div class="tag-list" id="targetAudienceTags">
+                    <!-- Dynamic tags -->
+                </div>
+            </div>
+
+            <!-- Domain Availability Card -->
+            <div class="detail-card">
+                <div class="card-header">
+                    <div class="card-icon">🌐</div>
+                    <h2 class="card-title">Domain Availability</h2>
+                </div>
+                <div class="domain-list" id="domainList">
+                    <!-- Dynamic domains -->
+                </div>
+            </div>
+
+            <!-- Taglines Card -->
+            <div class="detail-card">
+                <div class="card-header">
+                    <div class="card-icon">✨</div>
+                    <h2 class="card-title">Catchy Taglines</h2>
+                </div>
+                <div id="taglinesList">
+                    <!-- Dynamic taglines -->
+                </div>
+            </div>
+
+            <!-- Branding Ideas Card -->
+            <div class="detail-card">
+                <div class="card-header">
+                    <div class="card-icon">🎨</div>
+                    <h2 class="card-title">Branding & Colors</h2>
+                </div>
+                <div class="card-content" id="brandingContent">
+                    <strong>Logo Concept:</strong> Minimalist wordmark with custom typography emphasizing the first letter
+                </div>
+                <div class="color-palette" id="colorPalette">
+                    <!-- Dynamic colors -->
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="saveToFavorites()">💾 Save to Favorites</button>
+            <a href="index.html" class="btn btn-secondary">🚀 Generate More Names</a>
+        </div>
+    </div>
+
+    <script>
+        // Business name data generator
+        const businessData = {
+            'NexusTech': {
+                industry: 'Tech Startup',
+                originality: 95,
+                seo: 88,
+                memorability: 92,
+                explanation: 'Combines "Nexus" (connection point) with "Tech" to create a modern, memorable brand. The name suggests innovation and connectivity, perfect for a technology company focused on bringing systems together.',
+                targetAudience: ['Tech Professionals', 'Early Adopters', 'B2B Clients'],
+                domains: [
+                    { name: 'nexustech.com', available: false },
+                    { name: 'nexustech.io', available: true },
+                    { name: 'getnexustech.com', available: true },
+                    { name: 'nexustechapp.com', available: true }
+                ],
+                taglines: [
+                    'Connecting Innovation',
+                    'Where Technology Meets Tomorrow',
+                    'Your Digital Nexus',
+                    'Innovation at Every Connection'
+                ],
+                colors: ['#2563eb', '#3b82f6', '#60a5fa'],
+                logoIdea: 'Modern geometric design featuring interconnected nodes representing network connections'
+            },
+            'FluxCoffee': {
+                industry: 'Coffee Shop',
+                originality: 88,
+                seo: 85,
+                memorability: 90,
+                explanation: 'Flux represents constant change and flow, perfect for a coffee shop where ideas flow and creativity happens. The name is memorable and modern while staying approachable.',
+                targetAudience: ['Coffee Enthusiasts', 'Remote Workers', 'Creative Professionals'],
+                domains: [
+                    { name: 'fluxcoffee.com', available: true },
+                    { name: 'flux.coffee', available: true },
+                    { name: 'fluxcoffeehouse.com', available: true }
+                ],
+                taglines: [
+                    'Where Ideas Flow',
+                    'Fresh Brews, Fresh Thoughts',
+                    'Coffee in Constant Motion',
+                    'Your Daily Flux of Flavor'
+                ],
+                colors: ['#78350f', '#92400e', '#b45309'],
+                logoIdea: 'Flowing coffee steam forming abstract waves, representing constant movement and energy'
+            }
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', initializeDetailsPage);
+
+        function initializeDetailsPage() {
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            const industryParam = urlParams.get('industry');
+            const isExploring = urlParams.get('explore') === 'true';
+
+            // Also check sessionStorage
+            const sessionData = sessionStorage.getItem('selectedBusinessName');
+            const sessionIndustry = sessionStorage.getItem('selectedIndustry');
+
+            let businessName, industry;
+
+            if (nameParam) {
+                businessName = decodeURIComponent(nameParam);
+                industry = decodeURIComponent(industryParam || '');
+            } else if (sessionData) {
+                const data = JSON.parse(sessionData);
+                businessName = data.name;
+                industry = data.industry;
+            } else if (isExploring && industryParam) {
+                industry = decodeURIComponent(industryParam);
+                businessName = generateSampleNameForIndustry(industry);
+            } else {
+                // Fallback
+                businessName = 'NexusTech';
+                industry = 'Tech Startup';
+            }
+
+            loadBusinessDetails(businessName, industry);
+        }
+
+        function generateSampleNameForIndustry(industry) {
+            const samples = {
+                'Tech Startup': 'NexusTech',
+                'Coffee Shop': 'FluxCoffee',
+                'Fitness Studio': 'ApexFit',
+                'Fashion Brand': 'LuminaFashion'
+            };
+            return samples[industry] || 'NexusTech';
+        }
+
+        function loadBusinessDetails(name, industry) {
+            // Get data or use defaults
+            const data = businessData[name] || generateDefaultData(name, industry);
+
+            // Update hero section
+            document.getElementById('businessName').textContent = name;
+            document.getElementById('industryBadge').textContent = data.industry || industry;
+            document.getElementById('scoreOriginality').textContent = data.originality;
+            document.getElementById('scoreSEO').textContent = data.seo;
+            document.getElementById('scoreMemorability').textContent = data.memorability;
+
+            // Update explanation
+            document.getElementById('explanationContent').textContent = data.explanation;
+
+            // Update target audience tags
+            const tagsContainer = document.getElementById('targetAudienceTags');
+            tagsContainer.innerHTML = data.targetAudience.map(audience => 
+                `<span class="tag">🎯 ${audience}</span>`
+            ).join('');
+
+            // Update domains
+            const domainList = document.getElementById('domainList');
+            domainList.innerHTML = data.domains.map(domain => `
+                <div class="domain-item">
+                    <span class="domain-name">${domain.name}</span>
+                    <span class="domain-status ${domain.available ? 'available' : 'taken'}">
+                        ${domain.available ? '✅ Available' : '❌ Taken'}
+                    </span>
+                </div>
+            `).join('');
+
+            // Update taglines
+            const taglinesList = document.getElementById('taglinesList');
+            taglinesList.innerHTML = data.taglines.map(tagline => 
+                `<div class="tagline-item">"${tagline}"</div>`
+            ).join('');
+
+            // Update branding
+            document.getElementById('brandingContent').innerHTML = `
+                <strong>Logo Concept:</strong> ${data.logoIdea}
+            `;
+
+            // Update color palette
+            const colorPalette = document.getElementById('colorPalette');
+            colorPalette.innerHTML = data.colors.map(color => 
+                `<div class="color-box" style="background-color: ${color}">${color}</div>`
+            ).join('');
+        }
+
+        function generateDefaultData(name, industry) {
+            return {
+                industry: industry,
+                originality: Math.floor(Math.random() * 20) + 80,
+                seo: Math.floor(Math.random() * 20) + 75,
+                memorability: Math.floor(Math.random() * 20) + 85,
+                explanation: `${name} combines modern branding elements with industry-specific appeal. The name is memorable, easy to pronounce, and works well across different marketing channels. It suggests professionalism while maintaining approachability.`,
+                targetAudience: ['Target Customers', 'Industry Professionals', 'General Public'],
+                domains: [
+                    { name: `${name.toLowerCase()}.com`, available: Math.random() > 0.5 },
+                    { name: `${name.toLowerCase()}.io`, available: true },
+                    { name: `get${name.toLowerCase()}.com`, available: true }
+                ],
+                taglines: [
+                    `Where ${industry} Meets Excellence`,
+                    `Your Trusted ${industry} Partner`,
+                    `Innovation in ${industry}`,
+                    `Redefining ${industry}`
+                ],
+                colors: ['#6366f1', '#ec4899', '#f59e0b'],
+                logoIdea: 'Modern wordmark with custom typography emphasizing brand personality'
+            };
+        }
+
+        function saveToFavorites() {
+            const name = document.getElementById('businessName').textContent;
+            const industry = document.getElementById('industryBadge').textContent;
+            
+            // Get current user
+            const currentUser = JSON.parse(localStorage.getItem('zynstro_currentUser') || 
+                                sessionStorage.getItem('zynstro_currentUser') || '{}');
+
+            if (!currentUser.email) {
+                alert('Please sign in to save favorites!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Initialize savedNames if not exists
+            if (!currentUser.savedNames) {
+                currentUser.savedNames = [];
+            }
+
+            // Check if already saved
+            const alreadySaved = currentUser.savedNames.some(item => item.name === name);
+            
+            if (alreadySaved) {
+                alert('✅ This name is already in your favorites!');
+                return;
+            }
+
+            // Add to saved names
+            currentUser.savedNames.push({
+                name: name,
+                industry: industry,
+                score: document.getElementById('scoreOriginality').textContent,
+                savedAt: new Date().toISOString()
+            });
+
+            // Update localStorage
+            const storageKey = localStorage.getItem('zynstro_currentUser') ? 'zynstro_currentUser' : null;
+            if (storageKey) {
+                localStorage.setItem(storageKey, JSON.stringify(currentUser));
+            } else {
+                sessionStorage.setItem('zynstro_currentUser', JSON.stringify(currentUser));
+            }
+
+            // Update users array
+            const users = JSON.parse(localStorage.getItem('zynstro_users') || '[]');
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('zynstro_users', JSON.stringify(users));
+            }
+
+            alert('💾 Saved to your favorites!');
+        }
+    </script>
+</body>
+</html>

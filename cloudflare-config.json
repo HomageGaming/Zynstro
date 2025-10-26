@@ -1,0 +1,215 @@
+{
+  "name": "Zynstro Multilingual CDN Configuration",
+  "description": "CloudFlare configuration for 37 language variants",
+  "version": "1.0.0",
+  
+  "dns_records": [
+    {
+      "type": "A",
+      "name": "@",
+      "content": "YOUR_SERVER_IP",
+      "proxied": true,
+      "ttl": 1,
+      "comment": "Main domain (auto CDN)"
+    },
+    {
+      "type": "A",
+      "name": "www",
+      "content": "YOUR_SERVER_IP",
+      "proxied": true,
+      "ttl": 1,
+      "comment": "WWW subdomain (auto CDN)"
+    },
+    {
+      "type": "CNAME",
+      "name": "cdn",
+      "content": "zynstro.com",
+      "proxied": true,
+      "ttl": 1,
+      "comment": "CDN subdomain"
+    }
+  ],
+  
+  "page_rules": [
+    {
+      "order": 1,
+      "targets": ["zynstro.com/*/*"],
+      "actions": {
+        "cache_level": "cache_everything",
+        "edge_cache_ttl": 86400,
+        "browser_cache_ttl": 14400
+      },
+      "comment": "Cache all language pages (1 day edge, 4 hours browser)"
+    },
+    {
+      "order": 2,
+      "targets": ["zynstro.com/*.{css,js,jpg,jpeg,png,gif,svg,webp,woff2,woff,ttf,eot}"],
+      "actions": {
+        "cache_level": "cache_everything",
+        "edge_cache_ttl": 2592000,
+        "browser_cache_ttl": 604800
+      },
+      "comment": "Cache static assets (30 days edge, 7 days browser)"
+    },
+    {
+      "order": 3,
+      "targets": ["zynstro.com/api/*"],
+      "actions": {
+        "cache_level": "bypass"
+      },
+      "comment": "Bypass cache for API endpoints"
+    },
+    {
+      "order": 4,
+      "targets": ["zynstro.com/admin/*"],
+      "actions": {
+        "cache_level": "bypass",
+        "security_level": "high"
+      },
+      "comment": "High security for admin area, no cache"
+    }
+  ],
+  
+  "cache_settings": {
+    "caching_level": "standard",
+    "browser_cache_ttl": 0,
+    "always_online": true,
+    "development_mode": false,
+    "query_string_sort": true,
+    "prefetch_preload": true,
+    "tiered_cache": true
+  },
+  
+  "speed_settings": {
+    "minify": {
+      "html": true,
+      "css": true,
+      "js": true
+    },
+    "brotli": true,
+    "rocket_loader": false,
+    "http2_prioritization": true,
+    "http3": true,
+    "early_hints": true
+  },
+  
+  "security_settings": {
+    "ssl": {
+      "mode": "full_strict",
+      "always_use_https": true,
+      "automatic_https_rewrites": true,
+      "min_tls_version": "1.2",
+      "tls_1_3": true,
+      "opportunistic_encryption": true
+    },
+    "waf": {
+      "enabled": true,
+      "mode": "medium"
+    },
+    "ddos_protection": {
+      "enabled": true
+    },
+    "bot_management": {
+      "enabled": true,
+      "verified_bots": true
+    }
+  },
+  
+  "language_headers": {
+    "CF-IPCountry": "Auto-detected country code (e.g., PK, US, ES)",
+    "CF-Connecting-IP": "Real visitor IP address",
+    "CF-Ray": "Request trace ID",
+    "CF-Visitor": "Visitor scheme (http/https)"
+  },
+  
+  "custom_headers": {
+    "response_headers": [
+      {
+        "name": "X-Frame-Options",
+        "value": "SAMEORIGIN"
+      },
+      {
+        "name": "X-Content-Type-Options",
+        "value": "nosniff"
+      },
+      {
+        "name": "X-XSS-Protection",
+        "value": "1; mode=block"
+      },
+      {
+        "name": "Referrer-Policy",
+        "value": "strict-origin-when-cross-origin"
+      },
+      {
+        "name": "Permissions-Policy",
+        "value": "geolocation=(), microphone=(), camera=()"
+      }
+    ]
+  },
+  
+  "supported_languages": [
+    "en", "en-us", "en-gb", "en-au", "en-ca",
+    "es", "es-es", "es-mx", "es-ar",
+    "fr", "fr-fr", "fr-ca",
+    "de", "de-de", "de-at",
+    "pt", "pt-br", "pt-pt",
+    "it", "it-it",
+    "ar", "ar-sa", "ar-ae",
+    "zh", "zh-cn", "zh-tw",
+    "ja", "ja-jp",
+    "ko", "ko-kr",
+    "nl", "nl-nl",
+    "ru", "ru-ru",
+    "hi", "hi-in",
+    "ur", "ur-pk"
+  ],
+  
+  "country_to_language_mapping": {
+    "US": "en-US",
+    "GB": "en-GB",
+    "AU": "en-AU",
+    "CA": "en-CA",
+    "ES": "es-ES",
+    "MX": "es-MX",
+    "AR": "es-AR",
+    "FR": "fr-FR",
+    "DE": "de-DE",
+    "AT": "de-AT",
+    "BR": "pt-BR",
+    "PT": "pt-PT",
+    "IT": "it-IT",
+    "SA": "ar-SA",
+    "AE": "ar-AE",
+    "CN": "zh-CN",
+    "TW": "zh-TW",
+    "JP": "ja-JP",
+    "KR": "ko-KR",
+    "NL": "nl-NL",
+    "RU": "ru-RU",
+    "IN": "hi-IN",
+    "PK": "ur-PK"
+  },
+  
+  "analytics": {
+    "web_analytics": true,
+    "browser_insights": true,
+    "zone_analytics": true
+  },
+  
+  "performance_targets": {
+    "cache_hit_ratio": "95%+",
+    "ttfb_global": "<200ms",
+    "bandwidth_savings": "60-90%",
+    "uptime": "99.99%"
+  },
+  
+  "notes": [
+    "Replace YOUR_SERVER_IP with actual server IP address",
+    "Enable 'Proxied' (Orange Cloud) for DNS records to use CDN",
+    "Page rules are applied in order - order matters!",
+    "Free plan includes: Unlimited bandwidth, DDoS protection, SSL, 3 page rules",
+    "Pro plan ($20/mo) adds: 20 page rules, image optimization, mobile redirect",
+    "Business plan ($200/mo) adds: Custom SSL, PCI compliance, 50 page rules",
+    "Use CloudFlare Workers for advanced routing logic if needed"
+  ]
+}

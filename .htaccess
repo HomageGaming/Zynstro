@@ -1,0 +1,481 @@
+# ================================================================
+# ZYNSTRO - MULTILINGUAL SEO & GEO-REDIRECTION RULES
+# Complete .htaccess configuration for international websites
+# ================================================================
+
+# ================================================================
+# 1. SERVER CONFIGURATION
+# ================================================================
+
+# Enable RewriteEngine
+RewriteEngine On
+RewriteBase /
+
+# Set default charset to UTF-8 for international characters
+AddDefaultCharset UTF-8
+
+# Set server timezone (optional)
+SetEnv TZ Asia/Karachi
+
+# ================================================================
+# 2. SECURITY HEADERS
+# ================================================================
+
+# Prevent clickjacking
+Header always set X-Frame-Options "SAMEORIGIN"
+
+# XSS Protection
+Header always set X-XSS-Protection "1; mode=block"
+
+# Prevent MIME type sniffing
+Header always set X-Content-Type-Options "nosniff"
+
+# Referrer Policy
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# HTTPS Redirect (uncomment when you have SSL)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# ================================================================
+# 3. WWW vs NON-WWW REDIRECT
+# ================================================================
+
+# Redirect www to non-www (choose one)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# OR redirect non-www to www
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# ================================================================
+# 4. LANGUAGE DETECTION & GEO-REDIRECTION
+# ================================================================
+
+# NOTE: Geo-redirection should be SUGGESTION-BASED, not automatic
+# Google penalizes automatic IP-based redirects
+# This implementation shows suggestions but allows user override
+
+# Set environment variable for detected country (via GeoIP module)
+# Requires mod_geoip installed on server
+<IfModule mod_geoip.c>
+    GeoIPEnable On
+    GeoIPDBFile /usr/share/GeoIP/GeoIP.dat
+    
+    # Store country code in environment variable
+    SetEnvIf GEOIP_COUNTRY_CODE US COUNTRY_US
+    SetEnvIf GEOIP_COUNTRY_CODE GB COUNTRY_GB
+    SetEnvIf GEOIP_COUNTRY_CODE AU COUNTRY_AU
+    SetEnvIf GEOIP_COUNTRY_CODE CA COUNTRY_CA
+    SetEnvIf GEOIP_COUNTRY_CODE ES COUNTRY_ES
+    SetEnvIf GEOIP_COUNTRY_CODE MX COUNTRY_MX
+    SetEnvIf GEOIP_COUNTRY_CODE AR COUNTRY_AR
+    SetEnvIf GEOIP_COUNTRY_CODE FR COUNTRY_FR
+    SetEnvIf GEOIP_COUNTRY_CODE DE COUNTRY_DE
+    SetEnvIf GEOIP_COUNTRY_CODE IT COUNTRY_IT
+    SetEnvIf GEOIP_COUNTRY_CODE PT COUNTRY_PT
+    SetEnvIf GEOIP_COUNTRY_CODE BR COUNTRY_BR
+    SetEnvIf GEOIP_COUNTRY_CODE NL COUNTRY_NL
+    SetEnvIf GEOIP_COUNTRY_CODE RU COUNTRY_RU
+    SetEnvIf GEOIP_COUNTRY_CODE CN COUNTRY_CN
+    SetEnvIf GEOIP_COUNTRY_CODE TW COUNTRY_TW
+    SetEnvIf GEOIP_COUNTRY_CODE JP COUNTRY_JP
+    SetEnvIf GEOIP_COUNTRY_CODE KR COUNTRY_KR
+    SetEnvIf GEOIP_COUNTRY_CODE SA COUNTRY_SA
+    SetEnvIf GEOIP_COUNTRY_CODE AE COUNTRY_AE
+    SetEnvIf GEOIP_COUNTRY_CODE IN COUNTRY_IN
+    SetEnvIf GEOIP_COUNTRY_CODE PK COUNTRY_PK
+    
+    # Pass country code to application via header
+    Header set X-User-Country "%{GEOIP_COUNTRY_CODE}e" env=GEOIP_COUNTRY_CODE
+</IfModule>
+
+# ================================================================
+# 5. BROWSER LANGUAGE DETECTION (Suggestion Only)
+# ================================================================
+
+# Do NOT automatically redirect based on Accept-Language
+# Instead, pass to JavaScript for suggestion banner
+# Google recommends this approach
+
+# Set header for JavaScript to read
+Header set X-Browser-Language "%{HTTP:Accept-Language}e"
+
+# ================================================================
+# 6. LANGUAGE-SPECIFIC URL REWRITING
+# ================================================================
+
+# Ensure language directories work correctly
+# Subdirectory structure: /es/, /fr/, /de/, etc.
+
+# Remove trailing slash from URLs (except root)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# Handle language directories
+# All language codes: en, es, fr, de, pt, it, ar, zh, ja, ko, nl, ru, hi, ur
+
+# English variants
+RewriteRule ^en/?$ /index.html?lang=en [QSA,L]
+RewriteRule ^en-us/?$ /index.html?lang=en-US [QSA,L]
+RewriteRule ^en-gb/?$ /index.html?lang=en-GB [QSA,L]
+RewriteRule ^en-au/?$ /index.html?lang=en-AU [QSA,L]
+RewriteRule ^en-ca/?$ /index.html?lang=en-CA [QSA,L]
+
+# Spanish variants
+RewriteRule ^es/?$ /index.html?lang=es [QSA,L]
+RewriteRule ^es-es/?$ /index.html?lang=es-ES [QSA,L]
+RewriteRule ^es-mx/?$ /index.html?lang=es-MX [QSA,L]
+RewriteRule ^es-ar/?$ /index.html?lang=es-AR [QSA,L]
+
+# French variants
+RewriteRule ^fr/?$ /index.html?lang=fr [QSA,L]
+RewriteRule ^fr-fr/?$ /index.html?lang=fr-FR [QSA,L]
+RewriteRule ^fr-ca/?$ /index.html?lang=fr-CA [QSA,L]
+
+# German variants
+RewriteRule ^de/?$ /index.html?lang=de [QSA,L]
+RewriteRule ^de-de/?$ /index.html?lang=de-DE [QSA,L]
+RewriteRule ^de-at/?$ /index.html?lang=de-AT [QSA,L]
+
+# Portuguese variants
+RewriteRule ^pt/?$ /index.html?lang=pt [QSA,L]
+RewriteRule ^pt-br/?$ /index.html?lang=pt-BR [QSA,L]
+RewriteRule ^pt-pt/?$ /index.html?lang=pt-PT [QSA,L]
+
+# Italian
+RewriteRule ^it/?$ /index.html?lang=it [QSA,L]
+RewriteRule ^it-it/?$ /index.html?lang=it-IT [QSA,L]
+
+# Arabic variants
+RewriteRule ^ar/?$ /index.html?lang=ar [QSA,L]
+RewriteRule ^ar-sa/?$ /index.html?lang=ar-SA [QSA,L]
+RewriteRule ^ar-ae/?$ /index.html?lang=ar-AE [QSA,L]
+
+# Chinese variants
+RewriteRule ^zh/?$ /index.html?lang=zh [QSA,L]
+RewriteRule ^zh-cn/?$ /index.html?lang=zh-CN [QSA,L]
+RewriteRule ^zh-tw/?$ /index.html?lang=zh-TW [QSA,L]
+
+# Japanese
+RewriteRule ^ja/?$ /index.html?lang=ja [QSA,L]
+RewriteRule ^ja-jp/?$ /index.html?lang=ja-JP [QSA,L]
+
+# Korean
+RewriteRule ^ko/?$ /index.html?lang=ko [QSA,L]
+RewriteRule ^ko-kr/?$ /index.html?lang=ko-KR [QSA,L]
+
+# Dutch
+RewriteRule ^nl/?$ /index.html?lang=nl [QSA,L]
+RewriteRule ^nl-nl/?$ /index.html?lang=nl-NL [QSA,L]
+
+# Russian
+RewriteRule ^ru/?$ /index.html?lang=ru [QSA,L]
+RewriteRule ^ru-ru/?$ /index.html?lang=ru-RU [QSA,L]
+
+# Hindi
+RewriteRule ^hi/?$ /index.html?lang=hi [QSA,L]
+RewriteRule ^hi-in/?$ /index.html?lang=hi-IN [QSA,L]
+
+# Urdu
+RewriteRule ^ur/?$ /index.html?lang=ur [QSA,L]
+RewriteRule ^ur-pk/?$ /index.html?lang=ur-PK [QSA,L]
+
+# ================================================================
+# 7. CANONICAL URL ENFORCEMENT
+# ================================================================
+
+# Force lowercase URLs for consistency
+RewriteMap lc int:tolower
+RewriteCond %{REQUEST_URI} [A-Z]
+RewriteRule ^(.*)$ ${lc:$1} [R=301,L]
+
+# ================================================================
+# 8. CONTENT-TYPE & COMPRESSION
+# ================================================================
+
+# Set correct MIME types
+<IfModule mod_mime.c>
+    # HTML
+    AddType text/html .html .htm
+    
+    # CSS
+    AddType text/css .css
+    
+    # JavaScript
+    AddType application/javascript .js
+    AddType application/json .json
+    
+    # XML & Sitemaps
+    AddType application/xml .xml
+    AddType application/xml .sitemap
+    
+    # Images
+    AddType image/svg+xml .svg .svgz
+    AddType image/webp .webp
+    
+    # Fonts
+    AddType font/woff2 .woff2
+    AddType font/woff .woff
+    AddType application/vnd.ms-fontobject .eot
+    AddType font/ttf .ttf
+    AddType font/otf .otf
+</IfModule>
+
+# Enable GZIP compression
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, XML, JSON
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE image/svg+xml
+    
+    # Exclude old browsers
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# ================================================================
+# 9. BROWSER CACHING
+# ================================================================
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Default: 1 month
+    ExpiresDefault "access plus 1 month"
+    
+    # HTML: 1 hour (frequent updates)
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS & JavaScript: 1 week
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    
+    # Images: 1 month
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    
+    # Fonts: 1 year
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+    
+    # XML/JSON: 1 hour
+    ExpiresByType application/xml "access plus 1 hour"
+    ExpiresByType application/json "access plus 1 hour"
+    
+    # Sitemaps: 1 day
+    ExpiresByType application/xml "access plus 1 day"
+</IfModule>
+
+# Cache-Control headers
+<IfModule mod_headers.c>
+    # Cache static assets for 1 month
+    <FilesMatch "\.(ico|jpg|jpeg|png|gif|svg|webp|css|js|woff2|woff|ttf|eot)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    
+    # Don't cache HTML
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+    
+    # Cache sitemaps for 1 day
+    <FilesMatch "\.(xml|sitemap)$">
+        Header set Cache-Control "max-age=86400, public"
+    </FilesMatch>
+</IfModule>
+
+# ================================================================
+# 10. SITEMAP CONFIGURATION
+# ================================================================
+
+# Ensure sitemaps are accessible
+<Files "sitemap.xml">
+    Header set Content-Type "application/xml; charset=utf-8"
+    Header set X-Robots-Tag "noindex, follow"
+</Files>
+
+<FilesMatch "sitemap.*\.xml$">
+    Header set Content-Type "application/xml; charset=utf-8"
+    Header set X-Robots-Tag "noindex, follow"
+</FilesMatch>
+
+# ================================================================
+# 11. ROBOTS.TXT CONFIGURATION
+# ================================================================
+
+<Files "robots.txt">
+    Header set Content-Type "text/plain; charset=utf-8"
+</Files>
+
+# ================================================================
+# 12. ERROR PAGES (Multilingual)
+# ================================================================
+
+# Custom error pages
+ErrorDocument 404 /404.html
+ErrorDocument 403 /403.html
+ErrorDocument 500 /500.html
+
+# ================================================================
+# 13. PREVENT DIRECTORY LISTING
+# ================================================================
+
+Options -Indexes
+
+# ================================================================
+# 14. PROTECT SENSITIVE FILES
+# ================================================================
+
+# Block access to hidden files (except .well-known for SSL)
+<FilesMatch "^\.(?!well-known)">
+    Require all denied
+</FilesMatch>
+
+# Protect configuration files
+<FilesMatch "(\.htaccess|\.htpasswd|\.env|\.git|\.gitignore|package\.json|composer\.json)$">
+    Require all denied
+</FilesMatch>
+
+# ================================================================
+# 15. CORS HEADERS (For API & CDN)
+# ================================================================
+
+# Allow fonts from CDN
+<FilesMatch "\.(woff2|woff|ttf|eot|otf)$">
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+
+# Allow specific origins for API calls (update with your CDN)
+# Header set Access-Control-Allow-Origin "https://cdn.zynstro.com"
+# Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+# Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# ================================================================
+# 16. TRAILING SLASH NORMALIZATION
+# ================================================================
+
+# Add trailing slash to directories (optional)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_URI} !(.*)/$
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]
+
+# OR remove trailing slash (recommended for clean URLs)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# ================================================================
+# 17. LANGUAGE-SPECIFIC REDIRECTS (Examples)
+# ================================================================
+
+# Redirect old URLs to new language-specific URLs
+# Example: /about.html -> /en/about
+# RewriteRule ^about\.html$ /en/about [R=301,L]
+# RewriteRule ^contacto\.html$ /es/contact [R=301,L]
+
+# ================================================================
+# 18. SEARCH ENGINE OPTIMIZATION
+# ================================================================
+
+# Tell search engines to follow links but not index admin pages
+<FilesMatch "(admin|dashboard|login|signup)">
+    Header set X-Robots-Tag "noindex, nofollow"
+</FilesMatch>
+
+# Allow crawling of language directories
+<IfModule mod_rewrite.c>
+    # Don't block any language directories
+    RewriteCond %{REQUEST_URI} ^/(en|es|fr|de|pt|it|ar|zh|ja|ko|nl|ru|hi|ur)
+    RewriteCond %{HTTP_USER_AGENT} !(googlebot|bingbot|yandex|baidu) [NC]
+    # Allow all bots
+</IfModule>
+
+# ================================================================
+# 19. PERFORMANCE OPTIMIZATION
+# ================================================================
+
+# Enable HTTP/2 Server Push (if supported)
+# <IfModule mod_http2.c>
+#     H2Push on
+#     H2PushPriority * after
+#     H2PushPriority text/css before
+#     H2PushPriority application/javascript before
+# </IfModule>
+
+# ================================================================
+# 20. REDIRECTS FOR DEPRECATED PAGES
+# ================================================================
+
+# Example redirects (uncomment and modify as needed)
+# Redirect 301 /old-page.html /new-page
+# Redirect 301 /productos /es/products
+
+# ================================================================
+# 21. RATE LIMITING (Prevent abuse)
+# ================================================================
+
+# Limit request rate per IP (requires mod_evasive)
+# <IfModule mod_evasive20.c>
+#     DOSHashTableSize 3097
+#     DOSPageCount 20
+#     DOSSiteCount 50
+#     DOSPageInterval 1
+#     DOSSiteInterval 1
+#     DOSBlockingPeriod 10
+# </IfModule>
+
+# ================================================================
+# 22. LANGUAGE COOKIE PERSISTENCE
+# ================================================================
+
+# Allow JavaScript to read/write language cookies
+# Cookies are set by JavaScript in language-switcher.js
+# No server-side cookie manipulation needed
+
+# ================================================================
+# 23. SPECIAL REDIRECTS FOR SPECIFIC COUNTRIES
+# ================================================================
+
+# IMPORTANT: Use only for specific business requirements
+# Google recommends NOT doing automatic redirects
+
+# Example: Redirect Spanish IPs to Spanish site (ONLY IF REQUIRED)
+# RewriteCond %{ENV:COUNTRY_ES} 1
+# RewriteCond %{REQUEST_URI} !^/es/
+# RewriteCond %{HTTP_COOKIE} !lang_pref=
+# RewriteRule ^(.*)$ /es/$1 [R=302,L]
+
+# NOTE: Use 302 (temporary) not 301 (permanent) for geo-redirects
+# Allow users to override with cookie: lang_pref
+
+# ================================================================
+# 24. MOBILE DETECTION (Optional)
+# ================================================================
+
+# Detect mobile devices (optional for responsive design)
+# RewriteCond %{HTTP_USER_AGENT} (android|iphone|ipad|mobile) [NC]
+# RewriteCond %{REQUEST_URI} !^/mobile/
+# RewriteRule ^(.*)$ /mobile/$1 [R,L]
+
+# ================================================================
+# END OF CONFIGURATION
+# ================================================================
+
+# Additional custom rules can be added below

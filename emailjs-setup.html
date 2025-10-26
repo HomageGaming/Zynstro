@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmailJS Setup Instructions - Zynstro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #1f2937;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        h1 {
+            color: #6366f1;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .status {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .status.demo {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .status.configured {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        
+        .step {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #6366f1;
+        }
+        
+        .step h2 {
+            color: #6366f1;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .step ol {
+            margin-left: 1.5rem;
+        }
+        
+        .step li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #10b981;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .highlight {
+            background: #fef3c7;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .feature {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .feature h3 {
+            color: #6366f1;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Email Verification Setup</h1>
+        
+        <div class="status demo" id="statusBox">
+            ⚠️ Currently in DEMO MODE - Verification codes shown in console/alert
+        </div>
+        
+        <p style="margin-bottom: 2rem; line-height: 1.8;">
+            Zynstro includes email verification for new user signups. Follow these simple steps to enable real email sending using EmailJS (100% FREE for up to 200 emails/month).
+        </p>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>✅ 6-Digit Codes</h3>
+                <p>Secure random verification codes</p>
+            </div>
+            <div class="feature">
+                <h3>⏱️ 10-Min Expiry</h3>
+                <p>Codes auto-expire for security</p>
+            </div>
+            <div class="feature">
+                <h3>🔁 Resend Option</h3>
+                <p>Users can request new codes</p>
+            </div>
+            <div class="feature">
+                <h3>🛡️ Attempt Limit</h3>
+                <p>Maximum 5 verification attempts</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2>Step 1: Create EmailJS Account</h2>
+            <ol>
+                <li>Go to <a href="https://www.emailjs.com" target="_blank">EmailJS.com</a></li>
+                <li>Click "Sign Up" (FREE - No credit card required)</li>
+                <li>Verify your email address</li>
+            </ol>
+        </div>
+        
+        <div class="step">
+            <h2>Step 2: Add Email Service</h2>
+            <ol>
+                <li>In EmailJS dashboard, go to <span class="highlight">Email Services</span></li>
+                <li>Click "Add New Service"</li>
+                <li>Choose Gmail, Outlook, or any SMTP service</li>
+                <li>Follow setup wizard and connect your email</li>
+                <li><strong>Copy the Service ID</strong> (e.g., service_abc123)</li>
+            </ol>
+        </div>
+        
+        <div class="step">
+            <h2>Step 3: Create Email Template</h2>
+            <ol>
+                <li>Go to <span class="highlight">Email Templates</span></li>
+                <li>Click "Create New Template"</li>
+                <li>Set Subject: <code>Verify Your Zynstro Account</code></li>
+                <li>Use these template variables:</li>
+            </ol>
+            <div class="code-block">
+Hello {{to_name}},
+
+Your Zynstro verification code is:
+
+{{verification_code}}
+
+This code expires in 10 minutes.
+
+Best regards,
+The Zynstro Team
+            </div>
+            <ol start="5">
+                <li><strong>Copy the Template ID</strong> (e.g., template_xyz789)</li>
+            </ol>
+        </div>
+        
+        <div class="step">
+            <h2>Step 4: Get Your Public Key</h2>
+            <ol>
+                <li>In EmailJS, go to <span class="highlight">Account → General</span></li>
+                <li>Find your <strong>Public Key</strong></li>
+                <li>Copy it (e.g., abcDEF123xyz)</li>
+            </ol>
+        </div>
+        
+        <div class="step">
+            <h2>Step 5: Configure Zynstro</h2>
+            <p style="margin-bottom: 1rem;">Open <code>script.js</code> and update this section:</p>
+            <div class="code-block">
+const EMAILJS_CONFIG = {
+    publicKey: '<span style="color: #fbbf24;">YOUR_PUBLIC_KEY_HERE</span>',
+    serviceID: '<span style="color: #fbbf24;">YOUR_SERVICE_ID_HERE</span>',
+    templateID: '<span style="color: #fbbf24;">YOUR_TEMPLATE_ID_HERE</span>'
+};
+            </div>
+            <p style="margin-top: 1rem;">Replace the yellow placeholders with your actual values from EmailJS.</p>
+        </div>
+        
+        <div class="step">
+            <h2>Step 6: Test It!</h2>
+            <ol>
+                <li>Save <code>script.js</code></li>
+                <li>Refresh <code>index.html</code> in your browser</li>
+                <li>Click "Sign Up" and use your real email</li>
+                <li>Check your inbox for the verification code</li>
+                <li>Enter the code to complete registration</li>
+            </ol>
+        </div>
+        
+        <div style="background: #f0f9ff; padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+            <h2 style="color: #6366f1; margin-bottom: 1rem;">🎯 Quick Demo Mode Test</h2>
+            <p style="margin-bottom: 1rem;">Want to test without setting up EmailJS?</p>
+            <ol>
+                <li>Just sign up with any email</li>
+                <li>Open browser console (F12)</li>
+                <li>The verification code will appear there</li>
+                <li>Copy and paste it to verify</li>
+            </ol>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="index.html" class="button">🚀 Open Zynstro</a>
+            <a href="https://www.emailjs.com" target="_blank" class="button" style="background: linear-gradient(135deg, #10b981, #059669);">📧 Go to EmailJS</a>
+        </div>
+        
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb; text-align: center; color: #6b7280;">
+            <p>📚 For detailed instructions, see <strong>EMAIL_SETUP_GUIDE.md</strong></p>
+            <p style="margin-top: 0.5rem;">Need help? Check the browser console for error messages.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Check if EmailJS is configured
+        if (typeof emailjs !== 'undefined') {
+            const statusBox = document.getElementById('statusBox');
+            // This is just a visual guide, actual config is in script.js
+            statusBox.className = 'status configured';
+            statusBox.innerHTML = '✅ EmailJS SDK loaded - Configure keys in script.js';
+        }
+    </script>
+</body>
+</html>

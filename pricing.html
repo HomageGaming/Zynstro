@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Zynstro | Choose Your Perfect Plan</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Choose the perfect Zynstro plan for your business naming needs. From free to enterprise, with multi-currency support.">
+    <meta name="keywords" content="pricing, business name generator pricing, zynstro plans, subscription">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Zynstro Pricing - Plans for Every Business">
+    <meta property="og:description" content="Flexible pricing plans with multi-currency support. Start free or choose professional features.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zynstro.com/pricing">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://zynstro.com/pricing">
+    
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="x-default" href="https://zynstro.com/pricing">
+    <link rel="alternate" hreflang="en" href="https://zynstro.com/pricing">
+    <link rel="alternate" hreflang="es" href="https://zynstro.com/es/precios">
+    <link rel="alternate" hreflang="fr" href="https://zynstro.com/fr/tarifs">
+    <link rel="alternate" hreflang="de" href="https://zynstro.com/de/preise">
+    <link rel="alternate" hreflang="ur-PK" href="https://zynstro.com/ur-pk/قیمتیں">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Pricing Page Specific Styles */
+        .pricing-hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .pricing-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .pricing-hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Billing Toggle */
+        .billing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 30px 0;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: #48bb78;
+        }
+        
+        .toggle-switch-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        .toggle-switch.active .toggle-switch-slider {
+            transform: translateX(30px);
+        }
+        
+        .billing-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .billing-label.active {
+            color: #48bb78;
+        }
+        
+        .savings-badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        /* Currency Selector */
+        .currency-selector {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 25px;
+            margin-top: 20px;
+        }
+        
+        .currency-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .currency-selector select option {
+            color: #333;
+        }
+        
+        /* Pricing Cards */
+        .pricing-container {
+            max-width: 1200px;
+            margin: -60px auto 60px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-card.popular {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .plan-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        
+        .plan-price-small {
+            font-size: 1.25rem;
+            color: #718096;
+            font-weight: 400;
+        }
+        
+        .plan-billing {
+            color: #718096;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+        
+        .plan-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        
+        .plan-features li::before {
+            content: '✓';
+            width: 24px;
+            height: 24px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+        
+        .plan-features li.disabled {
+            opacity: 0.5;
+        }
+        
+        .plan-features li.disabled::before {
+            content: '✗';
+            background: #cbd5e0;
+        }
+        
+        .plan-cta {
+            width: 100%;
+            padding: 16px 30px;
+            border-radius: 12px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .plan-cta.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .plan-cta.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .plan-cta.secondary {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        
+        .plan-cta.secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #2d3748;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .faq-question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+        }
+        
+        .faq-answer {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] .pricing-card {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .plan-features li {
+            flex-direction: row-reverse;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .pricing-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .pricing-container {
+                grid-template-columns: 1fr;
+                margin-top: -30px;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .plan-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; color: white;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0;">Zynstro</h2>
+            <div id="languageSwitcher" style="margin-right: 1rem;"></div>
+        </div>
+    </header>
+
+    <!-- Pricing Hero -->
+    <section class="pricing-hero">
+        <h1 id="pricingTitle">Choose Your Perfect Plan</h1>
+        <p id="pricingSubtitle">Start free and upgrade as you grow. Cancel anytime.</p>
+        
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+            <span class="billing-label" id="monthlyLabel">Monthly</span>
+            <div class="toggle-switch" id="billingToggle">
+                <div class="toggle-switch-slider"></div>
+            </div>
+            <span class="billing-label" id="annualLabel">
+                Annual <span class="savings-badge" id="savingsBadge">Save 20%</span>
+            </span>
+        </div>
+        
+        <!-- Currency Selector -->
+        <div class="currency-selector">
+            <span>💱</span>
+            <select id="currencySelect">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="CAD">CAD (CA$)</option>
+                <option value="AUD">AUD (A$)</option>
+                <option value="MXN">MXN (MX$)</option>
+                <option value="BRL">BRL (R$)</option>
+                <option value="JPY">JPY (¥)</option>
+                <option value="CNY">CNY (¥)</option>
+                <option value="KRW">KRW (₩)</option>
+                <option value="INR">INR (₹)</option>
+                <option value="PKR">PKR (₨)</option>
+                <option value="SAR">SAR (SR)</option>
+                <option value="AED">AED (د.إ)</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <div class="pricing-container" id="pricingCards">
+        <!-- Cards will be generated by JavaScript -->
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2 id="faqTitle">Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question" id="faq1Q">Can I change plans later?</div>
+            <div class="faq-answer" id="faq1A">Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" id="faq2Q">Is there a free trial?</div>
+            <div class="faq-answer" id="faq2A">Yes, all paid plans include a 7-day free trial. No credit card required to start.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" id="faq3Q">What payment methods do you accept?</div>
+            <div class="faq-answer" id="faq3A">We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for enterprise plans.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" id="faq4Q">Can I cancel anytime?</div>
+            <div class="faq-answer" id="faq4A">Absolutely! Cancel your subscription anytime from your account settings. No questions asked.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" id="faq5Q">Do you offer refunds?</div>
+            <div class="faq-answer" id="faq5A">Yes, we offer a 30-day money-back guarantee on all paid plans.</div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="multilingual-seo-config.js"></script>
+    <script src="language-switcher.js"></script>
+    <script src="pricing-config.js"></script>
+    
+    <script>
+        // Initialize
+        const langManager = new LanguageManager();
+        const pricingManager = new PricingManager();
+        
+        // Initialize with current language
+        pricingManager.init(langManager.currentLanguage);
+        
+        // Update exchange rates if needed
+        if (pricingManager.shouldUpdateRates()) {
+            pricingManager.updateExchangeRates();
+        }
+        
+        // Set currency based on language
+        const currencySelect = document.getElementById('currencySelect');
+        currencySelect.value = pricingManager.currentCurrency;
+        
+        // Billing toggle
+        const billingToggle = document.getElementById('billingToggle');
+        let isAnnual = false;
+        
+        billingToggle.addEventListener('click', () => {
+            isAnnual = !isAnnual;
+            billingToggle.classList.toggle('active');
+            pricingManager.setBillingCycle(isAnnual ? 'annual' : 'monthly');
+            renderPricingCards();
+        });
+        
+        // Currency change
+        currencySelect.addEventListener('change', (e) => {
+            pricingManager.setCurrency(e.target.value);
+            renderPricingCards();
+        });
+        
+        // Render pricing cards
+        function renderPricingCards() {
+            const container = document.getElementById('pricingCards');
+            const plans = pricingManager.getAllPlans();
+            
+            container.innerHTML = plans.map(plan => {
+                const priceDisplay = isAnnual && plan.annualPrice !== 'custom'
+                    ? pricingManager.formatPrice(plan.annualPrice / 12, plan.currency, langManager.currentLanguage)
+                    : plan.displayPrice;
+                
+                const billingText = isAnnual ? '/year (billed annually)' : '/month';
+                
+                return `
+                    <div class="pricing-card ${plan.popular ? 'popular' : ''}">
+                        <div class="plan-name">${plan.displayName}</div>
+                        <div class="plan-price">
+                            ${priceDisplay}
+                            ${plan.price !== 'custom' && plan.price !== 0 ? 
+                                `<span class="plan-price-small">/mo</span>` : ''}
+                        </div>
+                        ${plan.price !== 'custom' && plan.price !== 0 ? 
+                            `<div class="plan-billing">${billingText}</div>` : ''}
+                        
+                        <ul class="plan-features">
+                            ${plan.features.map(feature => {
+                                const featureName = PRICING_PLANS.featureNames[feature.id];
+                                const displayName = featureName ? 
+                                    (featureName[langManager.currentLanguage.split('-')[0]] || featureName.en) :
+                                    feature.id;
+                                
+                                let featureText = displayName;
+                                
+                                if (feature.unlimited) {
+                                    featureText += ' (Unlimited)';
+                                } else if (feature.limit) {
+                                    featureText += ` (${feature.limit})`;
+                                } else if (feature.members) {
+                                    featureText += ` (${feature.members} members)`;
+                                } else if (feature.level) {
+                                    featureText += ` (${feature.level})`;
+                                }
+                                
+                                const isDisabled = feature.included === false;
+                                
+                                return `<li class="${isDisabled ? 'disabled' : ''}">${featureText}</li>`;
+                            }).join('')}
+                        </ul>
+                        
+                        <button class="plan-cta ${plan.popular ? 'primary' : 'secondary'}">
+                            ${plan.ctaText}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Initial render
+        renderPricingCards();
+        
+        // Language switcher
+        const switcher = new LanguageSwitcher({ 
+            style: 'dropdown',
+            containerId: 'languageSwitcher'
+        });
+        switcher.init();
+        
+        // Listen for language changes
+        window.addEventListener('languageChanged', (e) => {
+            pricingManager.init(e.detail.language);
+            currencySelect.value = pricingManager.currentCurrency;
+            renderPricingCards();
+            updateTranslations();
+        });
+        
+        // Update page translations
+        function updateTranslations() {
+            const lang = langManager.currentLanguage.split('-')[0];
+            
+            const translations = {
+                pricingTitle: {
+                    en: 'Choose Your Perfect Plan',
+                    es: 'Elige Tu Plan Perfecto',
+                    fr: 'Choisissez Votre Plan Idéal',
+                    de: 'Wählen Sie Ihren Perfekten Plan',
+                    pt: 'Escolha Seu Plano Perfeito',
+                    ur: 'اپنا بہترین پلان منتخب کریں'
+                },
+                pricingSubtitle: {
+                    en: 'Start free and upgrade as you grow. Cancel anytime.',
+                    es: 'Comienza gratis y actualiza a medida que creces. Cancela en cualquier momento.',
+                    fr: 'Commencez gratuitement et évoluez à mesure que vous grandissez. Annulez à tout moment.',
+                    de: 'Beginnen Sie kostenlos und upgraden Sie, wenn Sie wachsen. Jederzeit kündbar.',
+                    pt: 'Comece grátis e atualize conforme você cresce. Cancele a qualquer momento.',
+                    ur: 'مفت شروع کریں اور بڑھنے کے ساتھ اپ گریڈ کریں۔ کسی بھی وقت منسوخ کریں۔'
+                },
+                monthlyLabel: {
+                    en: 'Monthly', es: 'Mensual', fr: 'Mensuel', de: 'Monatlich', 
+                    pt: 'Mensal', ur: 'ماہانہ'
+                },
+                annualLabel: {
+                    en: 'Annual', es: 'Anual', fr: 'Annuel', de: 'Jährlich',
+                    pt: 'Anual', ur: 'سالانہ'
+                },
+                savingsBadge: {
+                    en: 'Save 20%', es: 'Ahorra 20%', fr: 'Économisez 20%', 
+                    de: 'Sparen Sie 20%', pt: 'Economize 20%', ur: '20% بچائیں'
+                },
+                faqTitle: {
+                    en: 'Frequently Asked Questions',
+                    es: 'Preguntas Frecuentes',
+                    fr: 'Questions Fréquemment Posées',
+                    de: 'Häufig Gestellte Fragen',
+                    pt: 'Perguntas Frequentes',
+                    ur: 'اکثر پوچھے جانے والے سوالات'
+                }
+            };
+            
+            Object.keys(translations).forEach(key => {
+                const element = document.getElementById(key);
+                if (element && translations[key][lang]) {
+                    element.textContent = translations[key][lang];
+                }
+            });
+        }
+    </script>
+</body>
+</html>

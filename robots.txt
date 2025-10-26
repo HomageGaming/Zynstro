@@ -1,0 +1,135 @@
+# Zynstro - Robots.txt for International SEO
+# https://zynstro.com/robots.txt
+
+# Default rules for all crawlers
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /cgi-bin/
+
+# Allow access to all language directories
+Allow: /en/
+Allow: /en-us/
+Allow: /en-gb/
+Allow: /en-au/
+Allow: /en-ca/
+Allow: /es/
+Allow: /es-es/
+Allow: /es-mx/
+Allow: /es-ar/
+Allow: /fr/
+Allow: /fr-fr/
+Allow: /fr-ca/
+Allow: /de/
+Allow: /de-de/
+Allow: /de-at/
+Allow: /pt/
+Allow: /pt-br/
+Allow: /pt-pt/
+Allow: /it/
+Allow: /it-it/
+Allow: /ar/
+Allow: /ar-sa/
+Allow: /ar-ae/
+Allow: /zh/
+Allow: /zh-cn/
+Allow: /zh-tw/
+Allow: /ja/
+Allow: /ja-jp/
+Allow: /ko/
+Allow: /ko-kr/
+Allow: /nl/
+Allow: /nl-nl/
+Allow: /ru/
+Allow: /ru-ru/
+Allow: /hi/
+Allow: /hi-in/
+Allow: /ur/
+Allow: /ur-pk/
+
+# Allow CSS and JavaScript
+Allow: /style.css
+Allow: /script.js
+Allow: /multilingual-seo-config.js
+Allow: /language-switcher.js
+Allow: /schema-markup-multilingual.js
+Allow: /*.css$
+Allow: /*.js$
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://zynstro.com/sitemap.xml
+Sitemap: https://zynstro.com/sitemap-main.xml
+Sitemap: https://zynstro.com/sitemap-en.xml
+Sitemap: https://zynstro.com/sitemap-en-us.xml
+Sitemap: https://zynstro.com/sitemap-en-gb.xml
+Sitemap: https://zynstro.com/sitemap-en-au.xml
+Sitemap: https://zynstro.com/sitemap-en-ca.xml
+Sitemap: https://zynstro.com/sitemap-es.xml
+Sitemap: https://zynstro.com/sitemap-es-es.xml
+Sitemap: https://zynstro.com/sitemap-es-mx.xml
+Sitemap: https://zynstro.com/sitemap-es-ar.xml
+Sitemap: https://zynstro.com/sitemap-fr.xml
+Sitemap: https://zynstro.com/sitemap-fr-fr.xml
+Sitemap: https://zynstro.com/sitemap-fr-ca.xml
+Sitemap: https://zynstro.com/sitemap-de.xml
+Sitemap: https://zynstro.com/sitemap-de-de.xml
+Sitemap: https://zynstro.com/sitemap-de-at.xml
+Sitemap: https://zynstro.com/sitemap-pt.xml
+Sitemap: https://zynstro.com/sitemap-pt-br.xml
+Sitemap: https://zynstro.com/sitemap-pt-pt.xml
+Sitemap: https://zynstro.com/sitemap-it.xml
+Sitemap: https://zynstro.com/sitemap-it-it.xml
+Sitemap: https://zynstro.com/sitemap-ar.xml
+Sitemap: https://zynstro.com/sitemap-ar-sa.xml
+Sitemap: https://zynstro.com/sitemap-ar-ae.xml
+Sitemap: https://zynstro.com/sitemap-zh.xml
+Sitemap: https://zynstro.com/sitemap-zh-cn.xml
+Sitemap: https://zynstro.com/sitemap-zh-tw.xml
+Sitemap: https://zynstro.com/sitemap-ja.xml
+Sitemap: https://zynstro.com/sitemap-ja-jp.xml
+Sitemap: https://zynstro.com/sitemap-ko.xml
+Sitemap: https://zynstro.com/sitemap-ko-kr.xml
+Sitemap: https://zynstro.com/sitemap-nl.xml
+Sitemap: https://zynstro.com/sitemap-nl-nl.xml
+Sitemap: https://zynstro.com/sitemap-ru.xml
+Sitemap: https://zynstro.com/sitemap-ru-ru.xml
+Sitemap: https://zynstro.com/sitemap-hi.xml
+Sitemap: https://zynstro.com/sitemap-hi-in.xml
+Sitemap: https://zynstro.com/sitemap-ur.xml
+Sitemap: https://zynstro.com/sitemap-ur-pk.xml
+Sitemap: https://zynstro.com/sitemap-images.xml
+
+# Googlebot specific
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
+
+# Bingbot specific
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 1
+
+# Baiduspider (Chinese search engine)
+User-agent: Baiduspider
+Allow: /
+Allow: /zh/
+Allow: /zh-cn/
+Allow: /zh-tw/
+Crawl-delay: 2
+
+# Yandex (Russian search engine)
+User-agent: Yandex
+Allow: /
+Allow: /ru/
+Allow: /ru-ru/
+Crawl-delay: 1
