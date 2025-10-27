@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico">
-    <1-- Primary Meta Tags -->
+
+
+    <link rel="icon" href="Downloads/favicon.icn">                                                                          
+    <-- Primary Meta Tags -->
     <title>Free AI Business Name Generator Tool - Zynstro</title>
     <meta name="title" content="Free AI Business Name Generator Tool - Zynstro">
     <meta name="description" content="Zynstro AI-powered business name generator. Create a short, brandable name and instantly check domain availability. Find your perfect name today.">
@@ -67,6 +68,7 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-styles.css">
     
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -77,6 +79,11 @@
             <div class="auth-buttons">
                 <!-- Language Switcher -->
                 <div id="languageSwitcher" style="margin-right: 1rem;"></div>
+                
+                <!-- Cookie Settings Button -->
+                <button id="cookieSettingsBtn" class="auth-header-btn" title="Cookie Settings">
+                    🍪 Cookies
+                </button>
                 
                 <button id="signInBtn" class="auth-header-btn">Sign In</button>
                 <button id="signUpBtn" class="auth-header-btn primary">Sign Up</button>
@@ -571,6 +578,12 @@
 
         <footer>
             <p>Built with ❤️ for entrepreneurs and dreamers</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="about.html" style="color: white; text-decoration: none; margin: 0 0.5rem;">About Us</a> |
+                <a href="#" id="footerTermsLink" style="color: white; text-decoration: none; margin: 0 0.5rem;">Terms</a> |
+                <a href="#" id="footerPrivacyLink" style="color: white; text-decoration: none; margin: 0 0.5rem;">Privacy</a> |
+                <a href="#" id="footerCookiesLink" style="color: white; text-decoration: none; margin: 0 0.5rem;">Cookies</a>
+            </p>
         </footer>
     </div>
 
@@ -670,7 +683,7 @@
                     <div class="form-options">
                         <label class="checkbox-label">
                             <input type="checkbox" id="agreeTerms" required>
-                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                            <span>I agree to the <a href="#" id="viewTermsLink">Terms of Service</a> and <a href="#" id="viewPrivacyLink">Privacy Policy</a></span>
                         </label>
                     </div>
                     <button type="submit" class="auth-submit-btn">Create Account</button>
@@ -815,6 +828,9 @@
         </div>
     </div>
 
+    <!-- Cookie Manager (Load First) -->
+    <script src="cookie-manager.js"></script>
+    
     <!-- Multilingual SEO Scripts -->
     <script src="multilingual-seo-config.js"></script>
     <script src="language-switcher.js"></script>
@@ -881,8 +897,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-

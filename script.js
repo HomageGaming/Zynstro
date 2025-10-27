@@ -155,6 +155,7 @@ function initializeApp() {
     
     checkUserSession();
     initializeAuthSystem();
+    initializeCookieSettings();
     
     const modeCards = document.querySelectorAll('.mode-card');
     modeCards.forEach(card => {
@@ -939,6 +940,60 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
+}
+
+// Cookie Settings Initialization
+function initializeCookieSettings() {
+    const cookieSettingsBtn = document.getElementById('cookieSettingsBtn');
+    if (cookieSettingsBtn && typeof cookieManager !== 'undefined') {
+        cookieSettingsBtn.addEventListener('click', () => {
+            cookieManager.showPreferencesModal();
+        });
+    }
+    
+    // Terms of Service and Privacy Policy links
+    const viewTermsLink = document.getElementById('viewTermsLink');
+    const viewPrivacyLink = document.getElementById('viewPrivacyLink');
+    
+    if (viewTermsLink && typeof cookieManager !== 'undefined') {
+        viewTermsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            cookieManager.showTermsOfService();
+        });
+    }
+    
+    if (viewPrivacyLink && typeof cookieManager !== 'undefined') {
+        viewPrivacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            cookieManager.showPrivacyPolicy();
+        });
+    }
+    
+    // Footer links
+    const footerTermsLink = document.getElementById('footerTermsLink');
+    const footerPrivacyLink = document.getElementById('footerPrivacyLink');
+    const footerCookiesLink = document.getElementById('footerCookiesLink');
+    
+    if (footerTermsLink && typeof cookieManager !== 'undefined') {
+        footerTermsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            cookieManager.showTermsOfService();
+        });
+    }
+    
+    if (footerPrivacyLink && typeof cookieManager !== 'undefined') {
+        footerPrivacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            cookieManager.showPrivacyPolicy();
+        });
+    }
+    
+    if (footerCookiesLink && typeof cookieManager !== 'undefined') {
+        footerCookiesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            cookieManager.showPreferencesModal();
+        });
+    }
 }
 
 function handleSignUp(e) {

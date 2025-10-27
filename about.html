@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Zynstro | AI Business Name Generator</title>
+    <meta name="description" content="Learn about Zynstro's mission to help entrepreneurs find the perfect business name using AI technology. Discover our story, values, and commitment to your success.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-styles.css">
+    
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+        
+        .about-hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .about-section {
+            margin-bottom: 4rem;
+        }
+        
+        .about-section h2 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .about-section p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .mission-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mission-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .mission-card h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .mission-card p {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .value-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-item h4 {
+            font-size: 1.25rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .value-item p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 2rem auto 0;
+        }
+        
+        .stat-item {
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+        
+        .team-section {
+            background: #f9fafb;
+            padding: 4rem 2rem;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .team-member h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-role {
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .team-bio {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin: 2rem auto;
+            text-align: center;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #4f46e5;
+        }
+        
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-hero p {
+                font-size: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="about-hero">
+            <h1>🚀 About Zynstro</h1>
+            <p>Empowering entrepreneurs to find the perfect business name with AI-powered technology</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="about-content">
+            <!-- Our Story -->
+            <section class="about-section">
+                <h2>Our Story</h2>
+                <p>
+                    Zynstro was born from a simple observation: every great business starts with a great name, but finding that perfect name is often the hardest part. We've seen countless entrepreneurs spend weeks brainstorming, only to find their favorite names already taken.
+                </p>
+                <p>
+                    That's why we created Zynstro - an AI-powered business name generator that combines creativity with data-driven insights. Our advanced algorithms analyze thousands of successful business names, industry trends, and branding principles to generate unique, memorable names for your business.
+                </p>
+                <p>
+                    Since our launch, we've helped thousands of entrepreneurs discover their perfect business name, from tech startups to local coffee shops. We're not just generating names; we're helping dreams take their first step toward reality.
+                </p>
+            </section>
+
+            <!-- Mission -->
+            <section class="about-section">
+                <h2>Our Mission</h2>
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">🎯</div>
+                        <h3>Simplify Branding</h3>
+                        <p>Make professional-quality business naming accessible to everyone, from solo entrepreneurs to growing startups.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">🤖</div>
+                        <h3>AI Innovation</h3>
+                        <p>Leverage cutting-edge AI technology to generate creative, relevant, and trademark-safe business names.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">💡</div>
+                        <h3>Empower Entrepreneurs</h3>
+                        <p>Provide the tools and insights needed to make confident branding decisions from day one.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Values -->
+            <section class="about-section">
+                <h2>Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">✨</div>
+                        <h4>Creativity First</h4>
+                        <p>We believe every business deserves a unique, memorable name that stands out.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🔒</div>
+                        <h4>Privacy Matters</h4>
+                        <p>Your ideas are yours. We protect your data and never share your generated names.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🎓</div>
+                        <h4>Continuous Learning</h4>
+                        <p>Our AI constantly improves, learning from trends and user feedback.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🤝</div>
+                        <h4>User-Centric</h4>
+                        <p>Every feature we build is designed with your success in mind.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2>Our Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Names Generated</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5K+</div>
+                    <div class="stat-label">Happy Entrepreneurs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">AI Availability</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="team-section">
+            <div class="about-content">
+                <h2>Meet Our Team</h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">
+                    We're a passionate team of AI engineers, brand strategists, and entrepreneurs dedicated to helping you succeed.
+                </p>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-avatar">👨‍💼</div>
+                        <h3>Alex Thompson</h3>
+                        <div class="team-role">CEO & Founder</div>
+                        <p class="team-bio">Serial entrepreneur with 10+ years in branding and AI technology. Passionate about helping startups succeed.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">👩‍💻</div>
+                        <h3>Sarah Chen</h3>
+                        <div class="team-role">CTO & AI Lead</div>
+                        <p class="team-bio">AI researcher and engineer specializing in NLP and machine learning. Building the future of brand intelligence.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">👨‍🎨</div>
+                        <h3>Marcus Rodriguez</h3>
+                        <div class="team-role">Head of Design</div>
+                        <p class="team-bio">Award-winning designer with expertise in branding and user experience. Making AI accessible and beautiful.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-avatar">👩‍💼</div>
+                        <h3>Emily Watson</h3>
+                        <div class="team-role">Customer Success Lead</div>
+                        <p class="team-bio">Dedicated to ensuring every user finds their perfect name. Your success is our success.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2>Ready to Find Your Perfect Name?</h2>
+            <p>Join thousands of entrepreneurs who've discovered their perfect business name with Zynstro.</p>
+            <a href="index.html" class="cta-button">Start Generating Names ✨</a>
+        </div>
+
+        <!-- Back Link -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; color: #6b7280;">
+            <p>© 2025 Zynstro. Built with ❤️ for entrepreneurs and dreamers.</p>
+        </footer>
+    </div>
+
+    <!-- Cookie Manager Scripts -->
+    <script src="cookie-manager.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Manager Demo - Zynstro</title>
+    <link rel="stylesheet" href="cookie-styles.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-header h1 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-header p {
+            color: #6b7280;
+        }
+        
+        .demo-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f9fafb;
+            border-radius: 12px;
+            border-left: 4px solid #6366f1;
+        }
+        
+        .demo-section h2 {
+            color: #1f2937;
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .demo-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+        
+        .demo-btn.secondary {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+        
+        .demo-btn.secondary:hover {
+            background: #d1d5db;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .info-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+        
+        .info-card p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .status-badge.enabled {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-badge.disabled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .console-output {
+            background: #1f2937;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .console-output .line {
+            margin-bottom: 0.25rem;
+        }
+        
+        .console-output .error {
+            color: #ef4444;
+        }
+        
+        .console-output .success {
+            color: #10b981;
+        }
+        
+        .console-output .info {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🍪 Cookie Manager Demo</h1>
+            <p>Interactive demonstration of the cookie management system</p>
+        </div>
+
+        <!-- Cookie Controls -->
+        <div class="demo-section">
+            <h2>Cookie Controls</h2>
+            <p>Test the cookie consent banner and preferences modal</p>
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="showConsentBanner()">Show Consent Banner</button>
+                <button class="demo-btn" onclick="showPreferences()">Open Preferences</button>
+                <button class="demo-btn" onclick="showCookiePolicy()">View Cookie Policy</button>
+                <button class="demo-btn secondary" onclick="resetConsent()">Reset Consent</button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="demo-section">
+            <h2>Quick Actions</h2>
+            <p>Quickly manage cookie preferences</p>
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="acceptAll()">Accept All Cookies</button>
+                <button class="demo-btn" onclick="acceptNecessary()">Necessary Only</button>
+                <button class="demo-btn secondary" onclick="clearAllCookies()">Clear All Cookies</button>
+            </div>
+        </div>
+
+        <!-- Cookie Operations -->
+        <div class="demo-section">
+            <h2>Cookie Operations</h2>
+            <p>Test setting, getting, and deleting cookies</p>
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="testSetCookie()">Set Test Cookie</button>
+                <button class="demo-btn" onclick="testGetCookie()">Get Test Cookie</button>
+                <button class="demo-btn secondary" onclick="testDeleteCookie()">Delete Test Cookie</button>
+            </div>
+        </div>
+
+        <!-- Current Status -->
+        <div class="demo-section">
+            <h2>Current Cookie Status</h2>
+            <p>View the current state of cookie preferences</p>
+            <div class="info-grid" id="statusGrid">
+                <!-- Will be populated dynamically -->
+            </div>
+            <div class="demo-buttons" style="margin-top: 1rem;">
+                <button class="demo-btn" onclick="refreshStatus()">Refresh Status</button>
+            </div>
+        </div>
+
+        <!-- Console Output -->
+        <div class="demo-section">
+            <h2>Console Output</h2>
+            <p>See the results of your actions</p>
+            <div class="console-output" id="consoleOutput">
+                <div class="line info">🚀 Cookie Manager Demo Ready</div>
+                <div class="line">Type commands above to test the cookie system...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Manager Scripts -->
+    <script src="cookie-manager.js"></script>
+    
+    <script>
+        // Demo Functions
+        function log(message, type = 'info') {
+            const consoleOutput = document.getElementById('consoleOutput');
+            const line = document.createElement('div');
+            line.className = `line ${type}`;
+            line.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function showConsentBanner() {
+            cookieManager.showConsentBanner();
+            log('✓ Consent banner displayed', 'success');
+        }
+
+        function showPreferences() {
+            cookieManager.showPreferencesModal();
+            log('✓ Preferences modal opened', 'success');
+        }
+
+        function showCookiePolicy() {
+            cookieManager.showCookiePolicy();
+            log('✓ Cookie policy displayed', 'success');
+        }
+
+        function resetConsent() {
+            localStorage.removeItem('zynstro_cookie_consent');
+            localStorage.removeItem('zynstro_cookie_preferences');
+            log('✓ Consent reset - page will reload', 'success');
+            setTimeout(() => location.reload(), 1000);
+        }
+
+        function acceptAll() {
+            cookieManager.acceptAll();
+            log('✓ All cookies accepted', 'success');
+            refreshStatus();
+        }
+
+        function acceptNecessary() {
+            cookieManager.acceptNecessary();
+            log('✓ Only necessary cookies accepted', 'success');
+            refreshStatus();
+        }
+
+        function clearAllCookies() {
+            if (confirm('Are you sure you want to clear all cookies (except necessary)?')) {
+                cookieManager.clearAllCookies();
+                log('✓ All non-necessary cookies cleared', 'success');
+            }
+        }
+
+        function testSetCookie() {
+            const success = cookieManager.setCookie('demo_test_cookie', 'Hello World!', 1, 'functional');
+            if (success) {
+                log('✓ Test cookie set: demo_test_cookie = "Hello World!"', 'success');
+            } else {
+                log('✗ Failed to set cookie (functional cookies may be disabled)', 'error');
+            }
+        }
+
+        function testGetCookie() {
+            const value = cookieManager.getCookie('demo_test_cookie');
+            if (value) {
+                log(`✓ Cookie value: ${value}`, 'success');
+            } else {
+                log('✗ Cookie not found or not set', 'error');
+            }
+        }
+
+        function testDeleteCookie() {
+            cookieManager.deleteCookie('demo_test_cookie');
+            log('✓ Test cookie deleted', 'success');
+        }
+
+        function refreshStatus() {
+            const preferences = cookieManager.getPreferences();
+            const hasConsent = cookieManager.hasConsent();
+            const allCookies = cookieManager.getAllCookies();
+            
+            const statusGrid = document.getElementById('statusGrid');
+            statusGrid.innerHTML = `
+                <div class="info-card">
+                    <h3>Consent Given</h3>
+                    <p>${hasConsent ? '✅ Yes' : '❌ No'}</p>
+                </div>
+                <div class="info-card">
+                    <h3>Necessary Cookies</h3>
+                    <p><span class="status-badge enabled">Always Enabled</span></p>
+                </div>
+                <div class="info-card">
+                    <h3>Functional Cookies</h3>
+                    <p><span class="status-badge ${preferences.functional ? 'enabled' : 'disabled'}">
+                        ${preferences.functional ? 'Enabled' : 'Disabled'}
+                    </span></p>
+                </div>
+                <div class="info-card">
+                    <h3>Analytics Cookies</h3>
+                    <p><span class="status-badge ${preferences.analytics ? 'enabled' : 'disabled'}">
+                        ${preferences.analytics ? 'Enabled' : 'Disabled'}
+                    </span></p>
+                </div>
+                <div class="info-card">
+                    <h3>Marketing Cookies</h3>
+                    <p><span class="status-badge ${preferences.marketing ? 'enabled' : 'disabled'}">
+                        ${preferences.marketing ? 'Enabled' : 'Disabled'}
+                    </span></p>
+                </div>
+                <div class="info-card">
+                    <h3>Total Cookies</h3>
+                    <p>${Object.keys(allCookies).length} cookies set</p>
+                </div>
+            `;
+            
+            log('✓ Status refreshed', 'success');
+        }
+
+        // Initialize status on load
+        window.addEventListener('load', () => {
+            refreshStatus();
+            log('✓ Demo initialized', 'success');
+            
+            // Show helpful tips
+            setTimeout(() => {
+                log('💡 Tip: Try different actions to see how the cookie system works', 'info');
+            }, 1000);
+        });
+
+        // Listen for storage changes (cookie preference updates)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'zynstro_cookie_preferences') {
+                log('🔄 Cookie preferences changed, refreshing status...', 'info');
+                refreshStatus();
+            }
+        });
+    </script>
+</body>
+</html>
